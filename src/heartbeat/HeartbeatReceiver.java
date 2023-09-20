@@ -13,12 +13,20 @@ public class HeartbeatReceiver extends Thread {
             Socket gameSocket = serverSocket.accept();
             BufferedReader input = new BufferedReader(new InputStreamReader(gameSocket.getInputStream()));
             String inputString;
-            while ((inputString = input.readLine()) != null) {
-                System.out.println("Received: " + inputString);
+            while (gameSocket.isBound()) {
+                if ((inputString = input.readLine()) != null) {
+                    System.out.println("Received: " + inputString);
+                }
+                else{
+                    System.out.println("There is no Game engine present");
+                    Thread.sleep(2000);
+                }
             }
-            System.out.println("Game Died.");
+
         } catch(IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

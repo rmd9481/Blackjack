@@ -83,10 +83,11 @@ public class Game {
         System.out.printf("%s: %d wins (%.2f%%)\n", dealer.getName(), dealer.getWinCount(), dealer.getWinPercentage(totalGames));
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         Game game = new Game();
+        Socket socket = new Socket("localhost",6000);
         try{
-            Socket socket = new Socket("localhost",6000);
+            //Socket socket = new Socket("localhost",6000);
             for (int i = 0; i < 100; i++) {
                 game.playRound();
                 game.displayStatistics();
@@ -96,6 +97,16 @@ public class Game {
             game.displayStatistics();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+
+        } finally {
+            try {
+                if (socket != null) {
+                    socket.close();
+                }
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+
+              }
+          }
         }
-    }
 }
