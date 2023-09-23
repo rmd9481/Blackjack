@@ -9,24 +9,28 @@ import java.net.Socket;
 public class HeartbeatReceiver extends Thread {
 
     public void receive() {
+        search:
         try(ServerSocket serverSocket = new ServerSocket(6000)) {
+
             Socket gameSocket = serverSocket.accept();
+
             BufferedReader input = new BufferedReader(new InputStreamReader(gameSocket.getInputStream()));
             String inputString;
             while (gameSocket.isBound()) {
                 if ((inputString = input.readLine()) != null) {
                     System.out.println("Received: " + inputString);
                 }
+
                 else{
                     System.out.println("There is no Game engine present");
-                    Thread.sleep(2000);
+                    serverSocket.close();
+                    receive();
+
                 }
             }
 
         } catch(IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 

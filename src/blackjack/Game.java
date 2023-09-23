@@ -86,6 +86,7 @@ public class Game {
     public static void main(String[] args) throws InterruptedException, IOException {
         Game game = new Game();
         Socket socket = new Socket("localhost",6000);
+
         try{
             //Socket socket = new Socket("localhost",6000);
             for (int i = 0; i < 100; i++) {
