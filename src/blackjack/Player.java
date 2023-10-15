@@ -25,6 +25,14 @@ public class Player {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWinCount(int winCount) {
+        this.winCount = winCount;
+    }
+
     public void incrementWinCount() {
         this.winCount++;
     }
