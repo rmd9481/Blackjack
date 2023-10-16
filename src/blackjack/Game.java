@@ -69,7 +69,9 @@ public class Game {
             winners.add(roundWinner.getName());
             roundWinner.incrementWinCount();
             if (roundWinner.getWinCount() >= 15 + crashCount * 5) {
-                throw new RuntimeException(roundWinner.getName() + " has won too many times ("+ roundWinner.getWinCount()+")!");
+                RuntimeException runtimeException = new RuntimeException(roundWinner.getName() + " has won too many times ("+ roundWinner.getWinCount()+")!");
+                runtimeException.printStackTrace();
+                throw runtimeException;
             }
         }
         totalGames++;
@@ -190,6 +192,7 @@ public class Game {
                     game.crashCount++;
                     game.saveCrashCount(game.crashCount);
                     System.out.println("Crash count incremented and saved.");
+                    Thread.sleep(5000);
                     main(null);
                 }
             } catch (IOException ioe) {
